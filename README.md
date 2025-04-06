@@ -104,7 +104,7 @@ REGISTRATION_TOKEN=ВашТокенРегистрации
   ```  
 4. Создаём файл .gitlab-ci.yml  
 - Скопируйте содержимое файла к себе в .yaml  
-  [Ссылка на docker-compose.yml](https://github.com/MichailFedyaev/GitLab_local/blob/main/docker-compose.yml)  
+  [Ссылка на .gitlab-ci.yml](https://github.com/MichailFedyaev/GitLab_local/blob/main/.gitlab-ci.yml)  
   ```nano .gitlab-ci.yml.yml```  
 5. Фиксируем изменения ```git add .```  
 6. Комитим изменения ```git commit -m "feat: #12345 Добавлен CI пайплайн"```  
