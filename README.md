@@ -93,7 +93,7 @@ REGISTRATION_TOKEN=ВашТокенРегистрации
 2. Создаем ветку и файлы  
   ```git checkout -b test_ci```  
 3. Создаем файл main.py  
-  ```
+  ```python
   def main():
     """
     This function prints "Hello World" to the console.
