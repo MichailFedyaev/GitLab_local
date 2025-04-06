@@ -84,7 +84,11 @@ REGISTRATION_TOKEN=ВашТокенРегистрации
 - Обновите файл .env с новым токеном и именем раннера (```test```).
 
 ### 3. Перезапустите сервис:  
-```docker-compose restart register-runner```
+```docker-compose restart register-runner```  
+После успешной регистрации раннера перейдите по URL: ```http://localhost:8000/admin/runners```  
+Вы должны увидеть такую картину  
+![image](https://github.com/user-attachments/assets/ac67e2b5-39c9-4ca9-8b54-bd6a71043ca0)
+
 
 # Пример настройки проекта с GitLab CI/CD  
 1. Клонируйте проект который создали ранее (```test```)  
