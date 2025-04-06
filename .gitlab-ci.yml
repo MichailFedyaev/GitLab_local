@@ -1,0 +1,30 @@
+stages:
+    - linting
+
+variables:
+    COMMIT_MESSAGE_PATTERN: "^.{0,10}:[[:space:]]#[0-9]{5,6}[[:space:]].{5,150}$"
+
+.default_rules: &default_rules
+    rules:
+        - if: '$CI_COMMIT_BRANCH != "main" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+
+commit-name-test:
+    stage: linting
+    <<: *default_rules
+    script:
+        - |
+            if [[ "$CI_COMMIT_MESSAGE" =~ $COMMIT_MESSAGE_PATTERN ]]; then
+              echo "Корректный формат сообщения коммита"
+            else
+              echo "Некорректный формат: $CI_COMMIT_MESSAGE"
+              exit 1
+            fi
+
+pylint:
+    stage: linting
+    <<: *default_rules
+    image: python:3.9
+    before_script:
+        - pip install pylint
+    script:
+        - pylint **/*.py

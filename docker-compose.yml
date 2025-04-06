@@ -1,0 +1,77 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    hostname: "localhost"
+    restart: unless-stopped
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost'
+        gitlab_rails['gitlab_shell_ssh_port'] = 8822
+        gitlab_rails['initial_root_password'] = 'CHANGEME123'
+    ports:
+      - "8000:80"
+      - "8822:22"
+    volumes:
+      - ./data/docker/gitlab/etc/gitlab:/etc/gitlab
+      - ./data/docker/gitlab/var/opt/gitlab:/var/opt/gitlab
+      - ./data/docker/gitlab/var/log/gitlab:/var/log/gitlab
+    networks:
+      - gitlab_net
+
+  dind:
+    image: docker:20-dind
+    restart: always
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: ""
+    command: [
+    "--host", "tcp://0.0.0.0:2375",
+    "--storage-driver=overlay2",
+    "--tls=false"
+    ]
+    volumes:
+      - ./data/dind/docker:/var/lib/docker
+    networks:
+      - gitlab_net
+
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine
+    restart: unless-stopped
+    environment:
+      DOCKER_HOST: "tcp://dind:2375"
+    volumes:
+      - ./config:/etc/gitlab-runner:z
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - gitlab_net
+    depends_on:
+      - dind
+
+  register-runner:
+    restart: "no"
+    image: gitlab/gitlab-runner:alpine
+    environment:
+        - REGISTRATION_TOKEN=${REGISTRATION_TOKEN}
+        - CI_SERVER_URL=http://localhost:8000
+    command:
+        - register
+        - --non-interactive
+        - --locked=false
+        - --name=${RUNNER_NAME}
+        - --executor=docker
+        - --url=http://gitlab
+        - --clone-url=http://gitlab
+        - --docker-image=docker:20-dind
+        - --docker-volumes=/var/run/docker.sock:/var/run/docker.sock
+        - --docker-network-mode=host
+    volumes:
+        - ./config:/etc/gitlab-runner:z
+        - ./data/dind/docker:/var/lib/docker
+    networks:
+        - gitlab_net
+    depends_on:
+        - dind
+
+networks:
+  gitlab_net:
+    name: gitlab_net
