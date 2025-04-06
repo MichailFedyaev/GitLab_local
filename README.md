@@ -85,7 +85,7 @@ REGISTRATION_TOKEN=ВашТокенРегистрации
 
 ### 3. Перезапустите сервис:  
 ```docker-compose restart register-runner```  
-После успешной регистрации раннера перейдите по URL: ```http://localhost:8000/admin/runners```  
+После регистрации раннера перейдите по URL: ```http://localhost:8000/admin/runners```  
 Вы должны увидеть похожую картину  
 ![image](https://github.com/user-attachments/assets/9e4d2e2b-c57c-4e78-b01b-39dbbe9bac22)
 
