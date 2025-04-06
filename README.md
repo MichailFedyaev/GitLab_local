@@ -103,16 +103,16 @@ REGISTRATION_TOKEN=ВашТокенРегистрации
   main()
   ```  
 4. Создаём файл .gitlab-ci.yml  
-- Скопируйте содержимое файла к себе в .yaml  
+   Копируем содержимое файла к себе в .yaml  
   [Ссылка на .gitlab-ci.yml](https://github.com/MichailFedyaev/GitLab_local/blob/main/.gitlab-ci.yml)  
   ```nano .gitlab-ci.yml.yml```  
-5. Фиксируем изменения ```git add .```  
-6. Комитим изменения ```git commit -m "feat: #12345 Добавлен CI пайплайн"```  
-7. Отправляем изменения ```git push -u origin test_ci```  
-8. После чего создаем Merge Request  
+6. Фиксируем изменения ```git add .```  
+7. Комитим изменения ```git commit -m "feat: #12345 Добавлен CI пайплайн"```  
+8. Отправляем изменения ```git push -u origin test_ci```  
+9. После чего создаем Merge Request  
   Открываем созданный проект ```test```
   Нажмите "Create merge request" для ветки ```test_ci```
-9. Проверьте выполнение пайплайна на вкладке "Сборочная линия"  
+10. Проверьте выполнение пайплайна на вкладке "Сборочная линия"  
   В проекте: ```CI/CD``` → ```Pipelines```  
   Должны отображаться два задания: ```commit-name-test``` и ```pylint```  
 
